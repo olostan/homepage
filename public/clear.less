@@ -104,9 +104,9 @@ section.loaded { opacity: 1; transform: translate(0);}
     }
 
 }
-.card.social > .title {     transform: rotate(-90deg) translate(-50px,-90px);  }
-.card.about > .title {     transform: rotate(-90deg) translate(-130px,-165px);  }
-.card.experience > .title {     transform: rotate(-90deg) translate(-240px,-200px);  }
+.card.social > .title {     transform: rotate(-90deg) translate(-50px,-100px);  }
+.card.about > .title {     transform: rotate(-90deg) translate(-130px,-170px);  }
+.card.experience > .title {     transform: rotate(-90deg) translate(-240px,-205px);  }
 .card.education > .title { transform: rotate(-90deg) translate(-100px,-135px);  }
 .card.public > .title { transform: rotate(-90deg) translate(-190px,-230px);  }
 .about {
@@ -132,6 +132,7 @@ section.loaded { opacity: 1; transform: translate(0);}
 .experience,.education,.public {
   position: relative;
   display: block;
+  page-break-inside: avoid; 
 
 }
 .experience section,.education section,.public section {
@@ -145,8 +146,8 @@ section.loaded { opacity: 1; transform: translate(0);}
     background-color: @accent;
     border: solid 1px @accent;
     //box-shadow: 2px 2px 10px #555;
-    width: 20px; height: 20px;
-    margin-left: -41.8px;
+    width: 16px; height: 16px;
+    margin-left: -38.8px;
     //margin-left: -35px;
     margin-top:15px;
     border-radius: 50px;

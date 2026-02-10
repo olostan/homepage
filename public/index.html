@@ -2,7 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Valentyn Shybanov: Personal profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Valentyn Shybanov — Personal profile</title>
+    <meta name="description" content="Senior Software Engineer/TLM — Google Cloud infrastructure & Console (reliability, scalability, automation), Cognitive/Embodied AI agent systems (Vertex AI / Gemini), former Google Developer Expert (Cloud & Web), public speaker. Author (Jan 28, 2026).">
+
+    <meta property="og:title" content="Valentyn Shybanov — Personal profile">
+    <meta property="og:description" content="Senior Software Engineer/TLM — Google Cloud infrastructure & Console (reliability, scalability, automation), Cognitive/Embodied AI agent systems (Vertex AI / Gemini), former Google Developer Expert (Cloud & Web), public speaker. Author (Jan 28, 2026).">
+    <meta property="og:type" content="profile">
+    <meta property="og:image" content="assets/Valentyn_Portrait_2025.jpg">
     <style>
         body {
             text-align: center;
@@ -17,7 +24,9 @@
                 background: #DDD;
             }
             #main {
-                width: 800px;
+                max-width: 800px;
+                width: calc(100% - 40px);
+                box-sizing: border-box;
                 box-shadow: 4px 4px 15px #555;
                 padding: 60px;
                 margin: 20px;
@@ -29,85 +38,110 @@
             background: #FFF;
         }
 
+        #headline {
+            font-size: 18px;
+            font-weight: 300;
+            margin: -6px 0 14px 0;
+        }
+
+        .detail ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .detail li {
+            margin: 0 0 8px 0;
+        }
+
+        .about ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .about li {
+            margin: 0 0 10px 0;
+        }
+
 </style>
     <link rel="stylesheet" type="text/css" href="font/roboto.css"> 
     <link rel="stylesheet" type="text/css" href="clear.css">
+    
 </head>
 <body>
 
-<div id="main" itemscope itemtype="http://schema.org/Person">
+<div id="main" itemscope itemtype="https://schema.org/Person">
     <section id="general">
         <section class="vcard">
-            <span id='name' class='fn' itemprop="name">Valentyn Shybanov</span>
-            <a class="pdf" target="_blank" href="Valentyn%20Shybanov%20Personal%20profile.pdf"><img width="64px" height="64px" src="assets/PDF.png"></a>
+            <h1 id='name' class='fn' itemprop="name">Valentyn Shybanov</h1>
+            <div id="headline" itemprop="jobTitle">Senior Software Engineer / TLM — Cloud infrastructure & Console, AI agent systems, developer experience</div>
+            <a class="pdf" target="_blank" rel="noopener noreferrer" href="Valentyn%20Shybanov%20Personal%20profile.pdf" aria-label="Open PDF version of profile">
+                <img width="64px" height="64px" alt="PDF" src="assets/PDF.png">
+            </a>
             <section id='contacts'>
+                <label>location</label> <span class="group">Bay Area, California, USA 🇺🇸</span>
                 <label>e-mail</label> <span class="group"><a class="email" href="mailto:olostan@gmail.com" itemprop="email">olostan@gmail.com</a></span>
-                <label>phone</label> <span class="group"><a class="tel" href="tel:+1(669)-649-8893"
-                                              itemprop="telephone">+1(669)-649-8893</a></span>
+                <label>phone</label> <span class="group"><a class="tel" href="tel:+16696498893" itemprop="telephone">+1(669)-649-8893</a></span>
                 <label>web</label> <span class="group"><a class='url profile' itemprop="url"
-                                            href='http://olostan.name/'>https://olostan.me/</a></span>
-                <label>skype-id</label> <span class="group"><a class="nickname" href="skype:olostan">olostan</a></span>
-                <label>birthday</label> <span class="bday group" itemprop="birthDate">1980/Aug/16</span>
+                                            href='https://olostan.me/'>https://olostan.me/</a></span>
             </section>
         </section>
-        <span id='photo'><img class="photo" width="109px" height="145px" src='assets/Valentyn_Shybanov_2018.jpg' itemprop="image"/></span>
+        <span id='photo'><img class="photo" src='assets/Valentyn_Portrait_2025.jpg' itemprop="image"/></span>
     </section>
 
     <section class="card social">
         <span class="title">Social</span>
         <section>
-            <a href="http://stackoverflow.com/users/1929573/valentyn-shybanov" target="_blank"><img
-                src="assets/stackoverflow.svg" title="Valentyn Shybanov at StackOverflow"></a>
-            <a class="group" href="http://stackoverflow.com/users/1929573/valentyn-shybanov" target="_blank">
-            http://stackoverflow.com/users/1929573/valentyn-shybanov</a>
+            <a href="https://stackoverflow.com/users/1929573/valentyn-shybanov" target="_blank" rel="noopener noreferrer"><img
+                src="assets/stackoverflow.svg" alt="Stack Overflow" title="Valentyn Shybanov at StackOverflow"></a>
+            <a class="group" href="https://stackoverflow.com/users/1929573/valentyn-shybanov" target="_blank" rel="noopener noreferrer">
+            stackoverflow.com/users/1929573</a>
         </section>
       
         <section>
-            <a href="https://twitter.com/olostan" target="_blank"><img src="assets/twitter-bird.png"
-                                                                       title="Valentyn Shybanov at Twitter"></a>
-            <a href="https://twitter.com/olostan" target="_blank">https://twitter.com/olostan</a>
-        </section>
-        <section>
-            <a href="https://github.com/olostan" target="_blank"><img src="assets/octocat.png"
-                                                                      title="Valentyn Shybanov at GitHub"></a>
-            <a href="https://github.com/olostan">https://github.com/olostan</a>
+            <a href="https://github.com/olostan" target="_blank" rel="noopener noreferrer"><img src="assets/octocat.png"
+                                                                      alt="GitHub" title="Valentyn Shybanov at GitHub"></a>
+            <a href="https://github.com/olostan" target="_blank" rel="noopener noreferrer">github.com/olostan</a>
         </section>
         
         <section>
-            <a href="http://www.linkedin.com/in/olostan" target="_blank"><img src="assets/linkedin-icon.png"
-                                                                              title="Valentyn Shybanov at Linkedin"></a>
-            <a href="http://www.linkedin.com/in/olostan">http://www.linkedin.com/in/olostan</a>
+            <a href="https://www.linkedin.com/in/olostan" target="_blank" rel="noopener noreferrer"><img src="assets/linkedin-icon.png"
+                                                                              alt="LinkedIn" title="Valentyn Shybanov at Linkedin"></a>
+            <a href="https://www.linkedin.com/in/olostan" target="_blank" rel="noopener noreferrer">linkedin.com/in/olostan</a>
         </section>
     </section>
     <section class="card about">
         <span class="title">About myself</span>
         <section>
-            <p>Started software engineering career with low-level system programming mostly on the start of the era of
-                modern computers, my interest involved from programming calculators, drivers and simple games (Using
-                <b>ASM</b>, <b>C/C++</b>) to developing
-                complex enterprise-level cloud-based solutions (<b>Java</b>, <b>.NET</b>, <b>Go</b>, <b>Containers</b>). Now, with help of modern technologies, solutions and
-                concepts, I am not just trying to bring any, even most courageous ideas into life, but also spread the
-                light of all brilliant technology solutions I can find to all other developers.</p>
-
-            <p>Now focused on a combination of <b>Web technologies</b> (Angular, Dart, React) and <b>Cloud Technologies</b>
-            (Google Cloud Platform, Amazon EC2, Azure).</p>
-
-            
-            <p>Being a <b>Google Developer Expert</b> (Cloud and Web) I loved to participate in different conferences,
-            give talks and organize workshops and hackathons. I am using my speaker's skills to encourage developers to
-            try new approaches, to see a global picture of software development. In my talks, I am using animated HTML5 presentations
-            to get more attention form auditory and make the material much more clear and visualized.</p>
-
-            <p>I've started my public speaking expirience at 2008 and until now participated as a speaker in dozens of conferences
-                including JEEConf, UAWeb, Google DevFest, BuildStuff and help to organize some of them. 
-            </p>
+            <ul>
+                <li>Senior software engineer and tech lead focused on cloud infrastructure and developer productivity: building resilient, reliable systems and automations that reduce delivery time from weeks to hours.</li>
+                <li>Current focus: <b>Cognitive/Embodied AI</b> and agentic systems — tool-using agents in continuous cognitive loops, self-learning behaviors, and dynamic role switching (Vertex AI / Gemini).</li>
+                <li>Former <b>Google Developer Expert</b> (Cloud and Web). Public speaker and workshop/hackathon organizer.</li>
+                <li>Public speaking since 2008; speaker at dozens of conferences including JEEConf, UAWeb, Google DevFest, and BuildStuff (and helped organize some of them).</li>
+            </ul>
 
             <p class="skillset"><span class="title">Skillset</span>
-                <span><b>Strong:</b> JavaScript (ES6/TypeScript), .NET, Go, Java, C++, Dart, shell scripting, HTML,
-                    Angular</span>
-                <span><b>Medium:</b> Perl, Python</span>
-                <span><b>Weak:</b> Ruby, PHP</span>
+                <span><b>AI/LLM:</b> Cognitive/Embodied AI systems, Vertex AI (Gemini), tool-using agents, embeddings, vector search/RAG, evaluation & monitoring</span>
+                <span><b>Cloud:</b> Platform engineering, Reliability, Resilience, Complience, Scalability, Automation & Developer Productivity, distributed systems</span>
+                <span><b>Stacks:</b> Python, Go, Java, .NET, C++, TypeScript/JS</span>
+                <span><b>Web:</b> Angular, React, Lit</span>
+                <span><b>Cloud:</b> Google Cloud Platform, Amazon EC2, Azure</span>
             </p>
+        </section>
+    </section>
+
+    <section class="card public">
+        <span class="title">Publications</span>
+        <section>
+            <span class="time">28.01.2026</span>
+            <span class="title">Technical publication</span>
+            <span class="company">TDCommons</span>
+
+            <div class="detail">
+                <p>
+                    Published: January 28, 2026.
+                    <a href="https://www.tdcommons.org/dpubs_series/9225/" target="_blank" rel="noopener noreferrer"><b>Framework for Situated Agents Using Tool-Based Perception and Interaction in a Continuous Cognitive Loop</b></a>
+                </p>
+            </div>
         </section>
     </section>
 
@@ -119,10 +153,11 @@
             <span class="company">Google</span>
 
             <div class="detail">
-                <p>At present, I am part of Google Cloud Platform team
-                 at <a href="https://www.google.com/">Google</a> and working on various projects of improving Google Cloud Console, 
-                 increasing scalability and reliability of Google Cloud Platform.
-                </p>
+                <ul>
+                    <li>Google Cloud Platform: improved Google Cloud Console and core infrastructure, increasing scalability and reliability.</li>
+                    <li>Implemented automations that reduced engineering time from weeks to hours.</li>
+                    <li>Designed and implemented a cognitive AI system with an agentic-first approach, self-learning, and dynamic role switching.</li>
+                </ul>
             </div>
         </section>
         <section>
@@ -131,9 +166,10 @@
             <span class="company">Amazon</span>
 
             <div class="detail">
-                <p>At part of Alexa Natural Language Understanding (NLU) team
-                 at <a href="https://www.amazon.com/">Amazon</a> I was responsible on improving scalability and latency of Amazon Alexa service.
-                </p>
+                <ul>
+                    <li>Alexa Natural Language Understanding (NLU): improved reliability and latency of core components of the Amazon Alexa service.</li>
+                    <li>Focused on scalability and performance improvements in production services.</li>
+                </ul>
             </div>
         </section>
 
@@ -170,12 +206,10 @@
                     for managing Ukrainian developers, guiding and controlling the development process, shaping requirements.
                 </p>
 
-                    <p>Later, as <b>Software/Solution Architect</b>, I was responsible for making architectural decisions
-            for bringing the Twinfield application into a cloud. Are of responsibility covered both for backend and front-end parts, providing
-            consistent solution covering visual appearance and streamlined development process. Besides it, he was
-            constantly performing hands-on developing by implementing critical and new components, training other developers.</p>
-
-                </p>
+                <p>Later, as <b>Software/Solution Architect</b>, I was responsible for making architectural decisions
+            to bring the Twinfield application to the cloud. My area of responsibility covered both backend and front-end parts,
+            providing a consistent solution for visual appearance and a streamlined development process. I also continuously did hands-on development
+            by implementing critical and new components and training other developers.</p>
 
                 <p>
                     Used technologies: <b>ASP.NET MVC, C#, AngularJS, CQRS/ES, MS SQL, RabbitMQ</b>.
@@ -629,9 +663,6 @@
 
     </section>
     -->
-   
-    </section>
-
 </div>
 <script>document.addEventListener('DOMContentLoaded', function() {
     setTimeout( function() {

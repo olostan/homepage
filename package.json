@@ -4,13 +4,18 @@
   "description": "Homepage of Valentyn Shyabanov",
   "main": "index.js",
   "scripts": {
+    "build": "node build.js",
+    "build:local": "node build.js local",
+    "build:pdf": "node build.js pdf",
+    "build:pdf:local": "node build.js pdf local",
+    "watch": "node build.js watch",
+    "build:css": "sass public/clear.scss public/clear.css --no-source-map --style=compressed",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "olostan@gmail.com",
   "license": "ISC",
-  "dependencies": {
-    "less": "^2.7.2",
-    "less-plugin-clean-css": "^1.5.1",
-    "puppeteer": "^1.19.0"
+  "devDependencies": {
+    "puppeteer": "^24.37.2",
+    "sass": "^1.97.3"
   }
 }

@@ -152,9 +152,9 @@ async function buildPDF(targetUrl) {
     await page.pdf({ path: 'public/Valentyn\ Shybanov\ Personal\ profile.pdf',
          margin: { top: "40", right: "40", bottom: "40", left: "40" },
          displayHeaderFooter: true, 
-         headerTemplate: `<div style="font-size:10px; text-align:center; width:100%; padding-top:10px;"><span class="title">Valentyn Shybanov - Personal profile</span></div>`,
-                footerTemplate: `<div style="font-size:10px; width:100%; padding:0 40px 10px 40px; box-sizing:border-box; display:flex; justify-content:space-between; align-items:flex-end;">
-                <a href="https://olostan.me/" style="color: #888; text-decoration: none;">https://olostan.me</a>
+         headerTemplate: `<div style="font-size:10px; color: #aaa; text-align:center; width:100%; padding-top:10px;"><span class="title">Valentyn Shybanov - Personal profile</span></div>`,
+                footerTemplate: `<div style="font-size:10px; color: #aaa; width:100%; padding:0 40px 10px 40px; box-sizing:border-box; display:flex; justify-content:space-between; align-items:flex-end;">
+                <a href="https://olostan.me/" style="color: #aaa; text-decoration: none;">https://olostan.me</a>
                 <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span></div>`,
          format: 'A4' });
     await browser.close();

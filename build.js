@@ -136,7 +136,7 @@ function buildCss() {
 }
 
 async function buildPDF(targetUrl) {
-    const browser = await puppeteer.launch({ headless: 'new' });
+    const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     //const CHROME = '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome';
     const page = await browser.newPage();
 
@@ -146,17 +146,19 @@ async function buildPDF(targetUrl) {
         let pageText = '';
         try {
             pageText = await page.evaluate(() => (document.body && (document.body.innerText || '')) || '');
-        } catch {}
+        } catch { }
         throw new Error(`Failed to load ${targetUrl} (status: ${status})${pageText ? `\n\nPage text:\n${pageText.slice(0, 400)}` : ''}`);
     }
-    await page.pdf({ path: 'public/Valentyn\ Shybanov\ Personal\ profile.pdf',
-         margin: { top: "40", right: "40", bottom: "40", left: "40" },
-         displayHeaderFooter: true, 
-         headerTemplate: `<div style="font-size:10px; color: #aaa; text-align:center; width:100%; padding-top:10px;"><span class="title">Valentyn Shybanov - Personal profile</span></div>`,
-                footerTemplate: `<div style="font-size:10px; color: #aaa; width:100%; padding:0 40px 10px 40px; box-sizing:border-box; display:flex; justify-content:space-between; align-items:flex-end;">
+    await page.pdf({
+        path: 'public/Valentyn\ Shybanov\ Personal\ profile.pdf',
+        margin: { top: "40", right: "40", bottom: "40", left: "40" },
+        displayHeaderFooter: true,
+        headerTemplate: `<div style="font-size:10px; color: #aaa; text-align:center; width:100%; padding-top:10px;"><span class="title">Valentyn Shybanov - Personal profile</span></div>`,
+        footerTemplate: `<div style="font-size:10px; color: #aaa; width:100%; padding:0 40px 10px 40px; box-sizing:border-box; display:flex; justify-content:space-between; align-items:flex-end;">
                 <a href="https://olostan.me/" style="color: #aaa; text-decoration: none;">https://olostan.me</a>
                 <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span></div>`,
-         format: 'A4' });
+        format: 'A4'
+    });
     await browser.close();
     console.log("PDF created");
 }

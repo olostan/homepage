@@ -1,5 +1,66 @@
 @use "sass:color";
 
+body {
+  text-align: center;
+  font-family: 'Roboto', serif;
+  font-weight: 100;
+}
+
+@media screen {
+  section {
+    opacity: 0;
+  }
+
+  section {
+    opacity: 0;
+    transition: 0.4s opacity ease-in, 0.4s transform ease;
+    transform: translate(50px);
+  }
+
+  body {
+    background: #DDD;
+  }
+
+  #main {
+    max-width: 800px;
+    width: calc(100% - 40px);
+    box-sizing: border-box;
+    box-shadow: 4px 4px 15px #555;
+    padding: 60px;
+    margin: 20px;
+  }
+}
+
+#main {
+  text-align: left;
+  display: inline-block;
+  background: #FFF;
+}
+
+#headline {
+  font-size: 18px;
+  font-weight: 300;
+  margin: -6px 0 14px 0;
+}
+
+.detail ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.detail li {
+  margin: 0 0 8px 0;
+}
+
+.about ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.about li {
+  margin: 0 0 10px 0;
+}
+
 section.loaded {
   opacity: 1;
   transform: translate(0);

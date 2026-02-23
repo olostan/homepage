@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gemini Nano Streaming Chat</title>
+  <style>
+    body { 
+      font-family: system-ui, -apple-system, sans-serif; 
+      background: #f0f2f5; 
+      margin: 0; 
+      padding: 20px; 
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <gemini-chat></gemini-chat>
+
+  <script type="module">
+    import { LitElement, html, css } from 'https://esm.run/lit';
+    import { unsafeHTML } from 'https://esm.run/lit/directives/unsafe-html.js';
+    import { marked } from 'https://esm.run/marked';
+    import DOMPurify from 'https://esm.run/dompurify';
+
+    class GeminiChat extends LitElement {
+      static properties = {
+        messages: { type: Array },
+        inputValue: { type: String },
+        status: { type: String },
+        isLoading: { type: Boolean },
+        downloadProgress: { type: Number }
+      };
+
+      static styles = css`
+        :host { 
+          display: flex; flex-direction: column; width: 100%; max-width: 800px; 
+          height: 85vh; background: white; border-radius: 12px; 
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1); overflow: hidden;
+        }
+        .header {
+          background: #f8f9fa; padding: 15px 20px; border-bottom: 1px solid #eee;
+          font-weight: 500; color: #333; display: flex; justify-content: space-between; align-items: center;
+        }
+        .status { font-size: 0.85em; color: #666; }
+        .chat-window { 
+          flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px;
+        }
+        .message { padding: 12px 16px; border-radius: 8px; line-height: 1.5; word-wrap: break-word; }
+        .user-msg { background: #e3f2fd; align-self: flex-end; max-width: 80%; }
+        .model-msg { background: #f5f5f5; align-self: flex-start; max-width: 90%; }
+        .input-area { display: flex; padding: 15px; border-top: 1px solid #eee; background: #fff; }
+        input { 
+          flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 6px; 
+          margin-right: 10px; font-size: 16px; outline: none;
+        }
+        input:focus { border-color: #1a73e8; }
+        input:disabled { background: #f5f5f5; cursor: not-allowed; }
+        button { 
+          padding: 12px 24px; background: #1a73e8; color: white; border: none; 
+          border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 500; transition: background 0.2s;
+        }
+        button:hover { background: #1557b0; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        
+        /* Markdown rendering styles */
+        pre { background: #282c34; color: #abb2bf; padding: 12px; border-radius: 6px; overflow-x: auto; }
+        code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+        p { margin-top: 0; }
+        p:last-child { margin-bottom: 0; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+      `;
+
+      constructor() {
+        super();
+        this.messages = [];
+        this.inputValue = '';
+        this.status = 'Initializing...';
+        this.isLoading = true;
+        this.downloadProgress = null;
+        this.session = null;
+        this.initAI();
+      }
+
+      async initAI() {
+        // Ensure the global API exists in the browser
+        //const LanguageModel = window.ai?.languageModel;
+        
+        if (!LanguageModel) {
+          this.status = '⚠️ Prompt API not supported. Check chrome://flags';
+          return;
+        }
+
+        try {
+          // 1. Check Model Availability using the new standard method
+          const availability = await LanguageModel.availability({
+            expectedInputs: [{ type: 'text', languages: ['en'] }],
+            expectedOutputs: [{ type: 'text', languages: ['en'] }]
+          });
+
+          if (availability === 'no' || availability === 'unavailable') {
+            this.status = '⚠️ Gemini Nano is not available on this device.';
+            return;
+          }
+
+          if (availability === 'after-download') {
+            this.status = 'Downloading Gemini Nano model...';
+          }
+
+          // 2. Create the Session with context and download monitoring
+          this.session = await LanguageModel.create({
+            initialPrompts: [
+              { role: 'system', content: 'You are a highly capable and helpful AI assistant.' }
+            ],
+            monitor: (m) => {
+              m.addEventListener('downloadprogress', (e) => {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                this.downloadProgress = percent;
+                this.status = `Downloading Model: ${percent}%`;
+              });
+            }
+          });
+          
+          this.status = '🟢 Ready (On-Device)';
+          this.isLoading = false;
+          this.downloadProgress = null;
+          
+          this.messages = [
+            { role: 'model', content: 'Hello! I am running locally and streaming my responses via the Prompt API. **How can I help you today?**' }
+          ];
+          
+        } catch (error) {
+          this.status = `❌ Error: ${error.message}`;
+        }
+      }
+
+      renderMessage(msg) {
+        if (msg.role === 'loading') {
+          return html`<div class="message model-msg" style="font-style: italic; opacity: 0.6;">Thinking...</div>`;
+        }
+
+        const rawHtml = marked.parse(msg.content);
+        const cleanHtml = DOMPurify.sanitize(rawHtml);
+        const msgClass = msg.role === 'user' ? 'user-msg' : 'model-msg';
+        
+        return html`
+          <div class="message ${msgClass}">
+            ${unsafeHTML(cleanHtml)}
+          </div>
+        `;
+      }
+
+      updated(changedProperties) {
+        if (changedProperties.has('messages')) {
+          const chatWindow = this.shadowRoot.querySelector('.chat-window');
+          if (chatWindow) chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+      }
+
+      render() {
+        const inputDisabled = this.isLoading || !this.session;
+
+        return html`
+          <div class="header">
+            <span>Client-Only Gemini (Streaming)</span>
+            <span class="status">${this.status}</span>
+          </div>
+          
+          <div class="chat-window">
+            ${this.messages.map(msg => this.renderMessage(msg))}
+          </div>
+          
+          <div class="input-area">
+            <input 
+              type="text" 
+              .value="${this.inputValue}" 
+              @input="${e => this.inputValue = e.target.value}"
+              @keypress="${e => e.key === 'Enter' && !inputDisabled && this.sendMessage()}"
+              placeholder="${inputDisabled ? 'Waiting for AI...' : 'Type your message...'}"
+              ?disabled="${inputDisabled}"
+            />
+            <button 
+              @click="${this.sendMessage}" 
+              ?disabled="${inputDisabled || !this.inputValue.trim()}">
+              Send
+            </button>
+          </div>
+        `;
+      }
+
+      async sendMessage() {
+        if (!this.inputValue.trim() || !this.session) return;
+        
+        const prompt = this.inputValue;
+        
+        // Add user message and an empty placeholder for the streaming model response
+        this.messages = [
+          ...this.messages, 
+          { role: 'user', content: prompt },
+          { role: 'model', content: '' } // Placeholder for stream
+        ];
+        
+        this.inputValue = '';
+        this.isLoading = true;
+
+        try {
+          // Start the streaming response
+          const stream = this.session.promptStreaming(prompt);
+          
+          for await (const chunk of stream) {
+            const lastMessage = this.messages[this.messages.length - 1];
+            
+            // Append the new chunk (delta) to it
+            this.messages = [
+              ...this.messages.slice(0, -1),
+              { role: 'model', content: lastMessage.content + chunk }
+            ];
+          }
+        } catch (error) {
+          this.messages = [
+            ...this.messages.slice(0, -1),
+            { role: 'model', content: `**Error processing request:** ${error.message}` }
+          ];
+        } finally {
+          this.isLoading = false;
+        }
+      }
+    }
+
+    customElements.define('gemini-chat', GeminiChat);
+  </script>
+</body>
+</html>

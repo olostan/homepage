@@ -89,7 +89,7 @@
         // Ensure the global API exists in the browser
         //const LanguageModel = window.ai?.languageModel;
         
-        if (!LanguageModel) {
+        if (!window.LanguageModel) {
           this.status = '⚠️ Prompt API not supported. Check chrome://flags';
           return;
         }

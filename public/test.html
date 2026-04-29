@@ -30,7 +30,8 @@
         inputValue: { type: String },
         status: { type: String },
         isLoading: { type: Boolean },
-        downloadProgress: { type: Number }
+        downloadProgress: { type: Number },
+        hasStarted: { type: Boolean }
       };
 
       static styles = css`
@@ -63,6 +64,12 @@
         }
         button:hover { background: #1557b0; }
         button:disabled { background: #ccc; cursor: not-allowed; }
+        .start-screen {
+          flex-grow: 1; display: flex; align-items: center; justify-content: center;
+        }
+        .start-button {
+          padding: 14px 28px; font-size: 18px;
+        }
         
         /* Markdown rendering styles */
         pre { background: #282c34; color: #abb2bf; padding: 12px; border-radius: 6px; overflow-x: auto; }
@@ -78,19 +85,23 @@
         super();
         this.messages = [];
         this.inputValue = '';
-        this.status = 'Initializing...';
-        this.isLoading = true;
+        this.status = 'Not started';
+        this.isLoading = false;
         this.downloadProgress = null;
+        this.hasStarted = false;
         this.session = null;
-        this.initAI();
       }
 
       async initAI() {
+        this.status = 'Initializing...';
+        this.isLoading = true;
+
         // Ensure the global API exists in the browser
         //const LanguageModel = window.ai?.languageModel;
         
         if (!window.LanguageModel) {
           this.status = '⚠️ Prompt API not supported. Check chrome://flags';
+          this.isLoading = false;
           return;
         }
 
@@ -103,6 +114,7 @@
 
           if (availability === 'no' || availability === 'unavailable') {
             this.status = '⚠️ Gemini Nano is not available on this device.';
+            this.isLoading = false;
             return;
           }
 
@@ -134,6 +146,7 @@
           
         } catch (error) {
           this.status = `❌ Error: ${error.message}`;
+          this.isLoading = false;
         }
       }
 
@@ -161,6 +174,16 @@
       }
 
       render() {
+        if (!this.hasStarted) {
+          return html`
+            <div class="start-screen">
+              <button class="start-button" @click="${this.startChat}">
+                Chat with AI
+              </button>
+            </div>
+          `;
+        }
+
         const inputDisabled = this.isLoading || !this.session;
 
         return html`
@@ -189,6 +212,11 @@
             </button>
           </div>
         `;
+      }
+
+      startChat() {
+        this.hasStarted = true;
+        this.initAI();
       }
 
       async sendMessage() {
